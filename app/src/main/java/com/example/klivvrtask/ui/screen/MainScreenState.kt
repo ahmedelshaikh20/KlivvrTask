@@ -4,7 +4,7 @@ import android.app.DownloadManager.Query
 import com.example.klivvrtask.domain.model.City
 
 data class MainScreenState(
-  val query: String? =null,
+  val query: String ="",
   val currentCities : List<City> = emptyList(),
   val isLoaded :Boolean = false
   )

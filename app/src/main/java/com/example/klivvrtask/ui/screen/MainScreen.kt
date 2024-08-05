@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,10 +31,6 @@ fun MainScreen(viewModel: MainViewModel = viewModel()) {
 
 
 
-  LaunchedEffect(key1 = state.isLoaded) {
-    if (!state.isLoaded)
-      viewModel.fetchFile(context)
-  }
   Column(modifier = Modifier.fillMaxSize()) {
 
     CustomSearchBar(modifier = Modifier, onQueryChange = {
@@ -64,7 +59,6 @@ if(state.isLoaded) {
       .width(64.dp)
       .align(CenterHorizontally),
     color = Color.Black,
-//    trackColor = MaterialTheme.colorScheme.surfaceVariant,
   )
 }
 

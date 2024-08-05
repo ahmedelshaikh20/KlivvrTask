@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class LoadCitiesUseCase @Inject constructor(val repository: Repository) {
 
-  suspend operator fun invoke(context: Context) = repository.loadAndMapCities(context)
+  suspend operator fun invoke() = repository.loadAndMapCities()
 
 
 }

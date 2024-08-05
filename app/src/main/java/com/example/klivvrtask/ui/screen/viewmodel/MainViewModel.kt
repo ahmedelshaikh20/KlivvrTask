@@ -1,6 +1,5 @@
 package com.example.klivvrtask.ui.screen.viewmodel
 
-import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -21,12 +20,15 @@ class MainViewModel @Inject constructor(
   val filterCitiesUseCase: FilterCitiesUseCase
 ) : ViewModel() {
   var state by mutableStateOf(MainScreenState())
-  fun fetchFile(context: Context) {
+
+
+  init {
     viewModelScope.launch {
-      state = state.copy(currentCities = loadCitiesUseCase(context), isLoaded = true)
+      loadCitiesUseCase()
+      onEvent(MainScreenEvents.OnQueryChange(state.query))
+      state = state.copy(isLoaded = true)
     }
   }
-
 
   fun onEvent(event: MainScreenEvents) {
     when (event) {
