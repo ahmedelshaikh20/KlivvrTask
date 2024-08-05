@@ -1,10 +1,14 @@
 package com.example.klivvrtask.ui.components
 
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -45,14 +49,14 @@ fun CustomSearchBar(
   }
   SearchBar(
     modifier = modifier
-      .fillMaxWidth()
-      .padding(vertical = 15.dp, horizontal = 15.dp)
-      .clip(RoundedCornerShape(10.dp)),
+        .fillMaxWidth()
+        .padding(vertical = 15.dp, horizontal = 15.dp)
+        .clip(RoundedCornerShape(10.dp)),
 
     query = query,
     onQueryChange = { newQuery ->
       query = newQuery
-      onQueryChange(newQuery.lowercase())
+      onQueryChange(newQuery)
     },
     onSearch = {
 
@@ -76,8 +80,8 @@ fun CustomSearchBar(
       Text(
         text = "Search",
         modifier = Modifier
-          .fillMaxWidth()
-          .size(30.dp),
+            .fillMaxWidth()
+            .size(30.dp),
         color = Color.Black
       )
     },
@@ -91,50 +95,80 @@ fun CustomSearchBar(
 
 
 @Composable
-fun CityItem(modifier: Modifier = Modifier, cityName: String , countryName : String , onClick : ()-> Unit) {
+fun CityItem(
+  modifier: Modifier = Modifier,
+  cityName: String,
+  countryName: String,
+  latitude: String,
+  longitude: String,
+  onClick: () -> Unit
+) {
+
+
+
   Box(
     modifier = modifier
-      .fillMaxWidth()
-      .clip(RoundedCornerShape(10.dp))
-      .padding(5.dp)
-      .background(Color.Black)
-      .clickable {
-        onClick()
-      }
+        .fillMaxWidth()
+        .clip(RoundedCornerShape(20.dp))
+        .padding(5.dp)
+        .background(Color.Black)
+        .clickable {
+            onClick()
+        }
   ) {
-    Column(modifier = Modifier.fillMaxWidth()){
-    Text(
-      text = cityName,
-      modifier = Modifier.padding(vertical = 10.dp, horizontal = 10.dp),
-      style = TextStyle(
-        color = Color.White,
-        fontWeight = FontWeight.Light,
-        fontSize = 20.sp
-      )
-    )
-      Text(
-        text = countryName,
-        modifier = Modifier.padding(vertical = 10.dp, horizontal = 10.dp),
-        style = TextStyle(
-          color = Color.White,
-          fontWeight = FontWeight.Light,
-          fontSize = 20.sp
+    Column(modifier = Modifier.fillMaxWidth()) {
+      Row {
+
+        Text(
+          text = cityName,
+          modifier = Modifier.padding(vertical = 10.dp, horizontal = 10.dp),
+          style = TextStyle(
+            color = Color.White,
+            fontWeight = FontWeight.Light,
+            fontSize = 20.sp
+          )
         )
-      )
+        Text(
+          text = countryName,
+          modifier = Modifier.padding(vertical = 10.dp, horizontal = 10.dp),
+          style = TextStyle(
+            color = Color.White,
+            fontWeight = FontWeight.Light,
+            fontSize = 20.sp
+          )
+        )
+      }
+      Row {
+        Text(
+          text = "Lat : $latitude",
+          modifier = Modifier.padding(vertical = 5.dp, horizontal = 10.dp),
+          style = TextStyle(
+            color = Color.Gray,
+            fontWeight = FontWeight.Light,
+            fontSize = 16.sp
+          )
+        )
+        Text(
+          text = "Lat : ${longitude}",
+          modifier = Modifier.padding(vertical = 5.dp, horizontal = 10.dp),
+          style = TextStyle(
+            color = Color.Gray,
+            fontWeight = FontWeight.Light,
+            fontSize = 16.sp
+          )
+        )
+      }
 
-  }}
 
-
+    }
+  }
 }
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview(showBackground = true)
-@Composable
-fun SearchBarPreview(){
-
-CityItem(cityName = "Cairo", countryName ="Egypt" ) {
-
-}
-
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun SearchBarPreview(){
+//
+////CityItem(cityName = "Cairo", countryName ="Egypt" ) {
+//
+//}
+//
+//}
