@@ -22,11 +22,14 @@ class MainViewModel @Inject constructor(
   var state by mutableStateOf(MainScreenState())
 
 
+  private fun getCities(){
+    state = state.copy(currentCities = filterCitiesUseCase(state.query) , isLoaded = true)
+
+  }
   init {
     viewModelScope.launch {
       loadCitiesUseCase()
-      onEvent(MainScreenEvents.OnQueryChange(state.query))
-      state = state.copy(isLoaded = true)
+      getCities()
     }
   }
 

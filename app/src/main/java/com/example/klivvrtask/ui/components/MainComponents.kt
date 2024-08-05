@@ -113,7 +113,7 @@ fun CityItem(
         .fillMaxWidth()
         .clip(RoundedCornerShape(20.dp))
         .padding(5.dp)
-        .background(color = colorResource(id = R.color.boxBackgroundColor))
+        .background(color = Color.LightGray)
         .clickable {
             onClick()
         }

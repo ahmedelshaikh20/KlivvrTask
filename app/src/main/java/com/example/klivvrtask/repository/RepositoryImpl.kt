@@ -11,7 +11,6 @@ import javax.inject.Inject
 class RepositoryImpl  @Inject constructor(private val cityFileService: CityFileService) :  Repository() {
 
   private val nameMap = HashMap<String, MutableList<City>>()
-  private val countryMap = HashMap<String, MutableList<City>>()
   private var entries = emptyList<City>()
   override suspend fun loadAndMapCities() = withContext(Dispatchers.IO) {
 
@@ -23,10 +22,7 @@ class RepositoryImpl  @Inject constructor(private val cityFileService: CityFileS
         nameMap.computeIfAbsent(prefix)
         { mutableListOf() }.add(entry)
       }
-      for (i in 1..entry.country.length) {
-        val prefix = entry.country.substring(0, i).lowercase(Locale.ROOT)
-        countryMap.computeIfAbsent(prefix) { mutableListOf() }.add(entry)
-      }
+
     }
   }
 
