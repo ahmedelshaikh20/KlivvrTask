@@ -5,7 +5,7 @@ import com.example.klivvrtask.domain.model.City
 
 abstract class Repository() {
 
-  abstract suspend fun loadAndMapCities(context: Context): List<City>
+  abstract suspend fun loadAndMapCities()
   abstract fun filterWithQuery(query: String): List<City>
 
 

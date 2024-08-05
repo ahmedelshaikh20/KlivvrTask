@@ -1,39 +1,40 @@
 package com.example.klivvrtask.repository
 
-import android.content.Context
 import com.example.klivvrtask.domain.model.City
 import com.example.klivvrtask.domain.repository.Repository
-import com.example.klivvrtask.util.readJson
+import com.example.klivvrtask.service.CityFileService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.Locale
+import javax.inject.Inject
 
-object RepositoryImpl : Repository() {
+class RepositoryImpl  @Inject constructor(private val cityFileService: CityFileService) :  Repository() {
 
   private val nameMap = HashMap<String, MutableList<City>>()
   private val countryMap = HashMap<String, MutableList<City>>()
   private var entries = emptyList<City>()
-  override suspend fun loadAndMapCities(context: Context): List<City> = withContext(Dispatchers.IO) {
+  override suspend fun loadAndMapCities() = withContext(Dispatchers.IO) {
 
-    entries = readJson(context)
+    entries = cityFileService.loadCities()
 
     for (entry in entries) {
       for (i in 1..entry.name.length) {
-        val prefix = entry.name.substring(0, i)
-        nameMap.computeIfAbsent(prefix) { mutableListOf() }.add(entry)
+        val prefix = entry.name.substring(0, i).lowercase(Locale.ROOT)
+        nameMap.computeIfAbsent(prefix)
+        { mutableListOf() }.add(entry)
       }
       for (i in 1..entry.country.length) {
-        val prefix = entry.country.substring(0, i)
+        val prefix = entry.country.substring(0, i).lowercase(Locale.ROOT)
         countryMap.computeIfAbsent(prefix) { mutableListOf() }.add(entry)
       }
     }
-    return@withContext entries
   }
 
   override fun filterWithQuery(query: String): List<City> {
     if (query.isEmpty()) {
       return entries
     }
-    val resFromName = nameMap.get(query) ?: emptyList()
+    val resFromName = nameMap.get(query.lowercase(Locale.ROOT)) ?: emptyList()
     return (resFromName).sortedBy { it.name }
 
   }
