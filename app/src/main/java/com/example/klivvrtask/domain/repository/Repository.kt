@@ -5,7 +5,8 @@ import com.example.klivvrtask.domain.model.City
 
 abstract class Repository() {
 
-  abstract fun fetchAndMapFile(context: Context):List<City>
+  abstract suspend fun fetchAndMapFile(context: Context): List<City>
+  abstract fun filterWithQuery(query: String): List<City>
 
 
 }

@@ -4,19 +4,24 @@ import android.content.Context
 import com.example.klivvrtask.R
 import com.example.klivvrtask.domain.model.City
 import com.example.klivvrtask.domain.repository.Repository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import kotlin.coroutines.CoroutineContext
 
 object RepositoryImpl : Repository() {
 
-   val nameMap = HashMap<String, MutableList<City>>()
-   val countryMap = HashMap<String, MutableList<City>>()
-  override fun fetchAndMapFile(context: Context): List<City> {
+  private val nameMap = HashMap<String, MutableList<City>>()
+  private val countryMap = HashMap<String, MutableList<City>>()
+  private var entries = emptyList<City>()
+  override suspend fun fetchAndMapFile(context: Context): List<City> = withContext(Dispatchers.IO) {
+
     val jsonString = context.resources.openRawResource(R.raw.cities).bufferedReader().readText()
     val json = Json { ignoreUnknownKeys = true }
-    val entries: List<City> = json.decodeFromString(jsonString)
+    entries = json.decodeFromString<List<City>>(jsonString).sortedBy { it.name }
 
-var count =0;
-    var mapind=0;
+    var count = 0;
+    var mapind = 0;
     for (entry in entries) {
       for (i in 1..entry.name.length) {
         val prefix = entry.name.substring(0, i)
@@ -29,7 +34,19 @@ var count =0;
       }
       count++;
     }
-println(mapind)
-    return entries
+    println(mapind)
+    return@withContext entries
   }
+
+  override fun filterWithQuery(query: String): List<City> {
+    if (query == "") {
+      return entries
+    }
+    val resFromName = nameMap.get(query) ?: emptyList()
+
+    return (resFromName ).sortedBy { it.name }
+
+  }
+
+
 }
