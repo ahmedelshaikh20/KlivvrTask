@@ -28,10 +28,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Text
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.example.klivvrtask.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,9 +51,9 @@ fun CustomSearchBar(
   }
   SearchBar(
     modifier = modifier
-        .fillMaxWidth()
-        .padding(vertical = 15.dp, horizontal = 15.dp)
-        .clip(RoundedCornerShape(10.dp)),
+      .fillMaxWidth()
+      .padding(vertical = 15.dp, horizontal = 15.dp)
+      .clip(RoundedCornerShape(10.dp)),
 
     query = query,
     onQueryChange = { newQuery ->
@@ -80,8 +82,8 @@ fun CustomSearchBar(
       Text(
         text = "Search",
         modifier = Modifier
-            .fillMaxWidth()
-            .size(30.dp),
+          .fillMaxWidth()
+          .size(30.dp),
         color = Color.Black
       )
     },
@@ -111,7 +113,7 @@ fun CityItem(
         .fillMaxWidth()
         .clip(RoundedCornerShape(20.dp))
         .padding(5.dp)
-        .background(Color.Black)
+        .background(color = colorResource(id = R.color.boxBackgroundColor))
         .clickable {
             onClick()
         }
@@ -123,8 +125,8 @@ fun CityItem(
           text = cityName,
           modifier = Modifier.padding(vertical = 10.dp, horizontal = 10.dp),
           style = TextStyle(
-            color = Color.White,
-            fontWeight = FontWeight.Light,
+            color = Color.Black,
+            fontWeight = FontWeight.Bold,
             fontSize = 20.sp
           )
         )
@@ -132,8 +134,8 @@ fun CityItem(
           text = countryName,
           modifier = Modifier.padding(vertical = 10.dp, horizontal = 10.dp),
           style = TextStyle(
-            color = Color.White,
-            fontWeight = FontWeight.Light,
+            color = Color.Black,
+            fontWeight = FontWeight.Bold,
             fontSize = 20.sp
           )
         )
@@ -143,7 +145,7 @@ fun CityItem(
           text = "Lat : $latitude",
           modifier = Modifier.padding(vertical = 5.dp, horizontal = 10.dp),
           style = TextStyle(
-            color = Color.Gray,
+            color = Color.Black,
             fontWeight = FontWeight.Light,
             fontSize = 16.sp
           )
@@ -152,7 +154,7 @@ fun CityItem(
           text = "Lat : ${longitude}",
           modifier = Modifier.padding(vertical = 5.dp, horizontal = 10.dp),
           style = TextStyle(
-            color = Color.Gray,
+            color = Color.Black,
             fontWeight = FontWeight.Light,
             fontSize = 16.sp
           )
